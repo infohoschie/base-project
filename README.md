@@ -1,93 +1,250 @@
-# Base Project SysProg2 2026
+# Systemnahe Programmierung 2 - 2026 - Base Project
+![ProjectLogo.svg](ProjectLogo.svg)
 
+Skeleton Workspace für die Vorlesung Systemnahe Programmierung an der DHWB Ravensburg.
 
+## Arm Dokumentationen
+### Arm Cortex-M4
+- [Cortex M4 Startseite](https://developer.arm.com/Processors/Cortex-M4)
+  - [ARMv7-M Architecture Reference Manual](https://developer.arm.com/documentation/ddi0403/ee/?lang=en)
+  - [Arm Cortex-M4 Processor Datasheet](https://developer.arm.com/documentation/102832/0100/?lang=en)
+  - [Cortex-M4 Devices Generic User Guide](https://developer.arm.com/documentation/dui0553/b/?lang=en)
+  - [Arm® Cortex®-M4 Processor Technical Reference Manual](https://developer.arm.com/documentation/100166/0001?lang=en)
 
-## Getting started
+### Arm Application Binary Interface (ABI)
+- [Arm Application Binary Interface](https://github.com/ARM-software/abi-aa)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Nordic nRF52840 Dokumentation
+- Development Kit _nRF52840 DK_
+  - [nRF52840 DK Overview](https://www.nordicsemi.com/Products/Development-hardware/nrf52840-dk)
+  - [nRF52840 DK Hardware Documentation](https://docs.nordicsemi.com/bundle/ug_nrf52840_dk/page/UG/dk/intro.html)
+- nRF52840 Processor
+  - [nRF52840 Overview](https://www.nordicsemi.com/Products/nRF52840)
+  - [nRF52840 Product Specification](https://docs.nordicsemi.com/bundle/ps_nrf52840/page/keyfeatures_html5.html)
+  - [nRF52840 Erratas](https://docs.nordicsemi.com/bundle?labelkey=nrf52840&labelkey=errata)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Simuliertes Board Info
+- [Nordic nRF boards (microbit)](https://www.qemu.org/docs/master/system/arm/nrf.html)
 
-## Add your files
+## GNU Toolchain
+ - [GNU Assembler Documentation](https://sourceware.org/binutils/docs/as/index.html)
+ - [GNU Linker Documentation](https://sourceware.org/binutils/docs/ld/index.html)
 
-* [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## Build-Umgebung
+- Arm Cross-Compiler: _gcc-arm-none-eabi_
+- GDB (Multi-Arch): _gdb-multiarch_
+- CMake
+- [Renode](https://renode.io/) ([github](https://github.com/renode/renode))
+- QEMU Arm System Emulator: _qemu-system-arm_
 
+Hinweis:
+Unter anderem bei SUSE, Arch, NixOs scheint der standard GDB ein GDB-Multiarch zu sein.
+
+### Debian/ Ubuntu Linux
+
+Über den Paketmanager installieren:
+
+```bash
+sudo apt install \
+  gcc-arm-none-eabi \
+  gdb-multiarch \
+  cmake \
+  qemu-system-arm
 ```
-cd existing_repo
-git remote add origin https://git.thomas-vogt.de/dhbw/systemnahe-programmierung/base-project-sysprog2-2026.git
-git branch -M main
-git push -uf origin main
+
+[Renode](https://renode.io/) muss manuell installiert werden.
+
+### Arch Linux
+
+Über den Paketmanager installieren:
+
+```bash
+yay -S \
+  arm-none-eabi-gcc \
+  arm-none-eabi-gdb \
+  cmake \
+  qemu-system-arm
 ```
 
-## Integrate with your tools
+[Renode](https://renode.io/) muss manuell installiert werden.
 
-* [Set up project integrations](https://git.thomas-vogt.de/dhbw/systemnahe-programmierung/base-project-sysprog2-2026/-/settings/integrations)
+### Linux-Docker Images
+Wir stellen vorgefertigte Linux-Docker Images bereit.
+Diese können direkt mit Docker gestartet werden:
+- [Arm Cross-Compiler](https://git.thomas-vogt.de/dhbw/systemnahe-programmierung/arm-cross-compiler)
+- [Arm Cross-Development Environment](https://git.thomas-vogt.de/dhbw/systemnahe-programmierung/arm-cross-development-environment)
+  Enthält IDE mit VS-Code und CLion.
 
-## Collaborate with your team
+### Windows
+- [MSYS](https://www.msys2.org/) Installer mit der Umgebung _UCRT64_ installieren.
+- In der UCRT64-Shell mittel _pacman_ die Pakete installieren:
+  ```bash
+  pacman -S \
+    ucrt64/mingw-w64-ucrt-x86_64-arm-none-eabi-gcc \
+    ucrt64/mingw-w64-ucrt-x86_64-gdb-multiarch \
+    ucrt64/mingw-w64-ucrt-x86_64-cmake \
+    ucrt64/mingw-w64-ucrt-x86_64-qemu
+  ```
 
-* [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+[Renode](https://github.com/renode/renode/releases/latest) muss manuel installiert werden.
 
-## Test and Deploy
 
-Use the built-in continuous integration in GitLab.
+### macOS
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+```bash
+brew install \
+  arm-none-eabi-gcc \
+  arm-none-eabi-gdb \
+  cmake \
+  qemu
+```
 
-***
+## Building
+Clonen des Quellcodes:
 
-# Editing this README
+```bash
+git clone \
+  https://git.thomas-vogt.de/dhbw/systemnahe-programmierung/base-project-sysprog2-2026.git
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Erstellen des Build Mittels CMake Presets:
 
-## Suggestions for a good README
+```bash
+cmake --preset arm-cortex-m4
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Bauen Mittels CMake Presets:
+```bash
+cmake --build --preset arm-cortex-m4
+```
 
-## Name
-Choose a self-explaining name for your project.
+## Generiertes Output analysieren (optional)
+- ELF-Sections anzeige:
+  ```bash
+  arm-none-eabi-objdump -x cmake-build-arm-cortex-m4/testApp.elf
+  ```
+- ELF-File disassemblieren (mit Quellcode-Verknüpfung):
+  ```bash
+  arm-none-eabi-objdump -d cmake-build-arm-cortex-m4/testApp.elf
+  arm-none-eabi-objdump -d -S cmake-build-arm-cortex-m4/testApp.elf
+  ```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Renode Emulator starten und mit GDB verbinden
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+_Renode_ und _GDB_ müssen in unterschiedlichen Konsolen (Shells) gestartet werden.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```bash
+renode cmake-build-arm-cortex-m4/platform.resc
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Falls _renode_ nicht im Pfad liegt, die ausführbare Datei über ihren _absoluten Pfad_ angeben.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+**Achtung:**
+Der *Build-Pfad* darf keine Leerzeichen enthalten.
+Andernfalls findet Renode das Script nicht.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Start GDB
+```bash
+gdb-multiarch testApp.elf -ex "target extended-remote localhost:3333" -ex "load" -ex "monitor start"
+```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+In manchen Distributionen kann der `gdb-multiarch` auch über den Befehl `gdb` aufgerufen werden.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## QEMU Emulator starten und mit GDB verbinden (Als Alternative zu Renode)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+_QEMU_ und _GDB_ müssen in unterschiedlichen Konsolen (Shells) gestartet werden.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### QEMU Emulation Starten:
+```bash
+qemu-system-arm \
+  -M microbit \
+  -device loader,file=cmake-build-arm-cortex-m4/testApp.elf \
+  -nographic \
+  -S \
+  -s \
+  -serial mon:stdio
+```
+### GDB zu QEMU verbinden:
+```bash
+gdb-multiarch \
+  cmake-build-arm-cortex-m4/testApp.elf \
+  -ex "target extended-remote localhost:1234" \
+  -ex "load"
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Um QEMU zu beenden die Tastenkombination `<strg> + a` und anschließend `x` nutzen.
 
-## License
-For open source projects, say how it is licensed.
+## GDB Tricks
+Hilfreiche GDB Befehle:
+- _help_ und _apropos_
+- _stepi_ und _nexti_
+- _info all-registers_
+- _info registers_
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## JetBrains CLion
+
+### Projekt Clonen
+
+URL:
+: https://git.thomas-vogt.de/dhbw/systemnahe-programmierung/skeleton-project.git
+
+Directory:
+: Projektverzeichnis
+
+### Profile Konfigurieren
+
+1. *Debug*: Profil löschen
+2. *arm-cortex-m4*: Profil aktivieren (*enable*)
+
+### File Types für Assembler Datein anpassen
+
+- Menü: _File_ -> _Settings_
+- Eintrag: _Editor_ -> _File Types_
+- _Assembly language file_ -> _File name Patterns_: "*.s" hinzufügen
+
+### Debugging Konfiguration
+
+- Menü: _Run_ -> _Edit Configurations..._
+- _Add New Configuration_ -> _Embedded GDB Server_
+
+Name:
+: testApp-Renode
+
+Target:
+: testApp
+
+Executable Binary:
+: testApp
+
+Debugger:
+: "Bundeld GDB" oder den zuvor installierten GDB auswählen
+
+Upload executable:
+: never
+
+'target remote' args:
+: `tcp::3333`
+
+GDB Server:
+: Pfad zur Renode Executable
+
+GDB Server Args:
+: `$CMakeCurrentBuildDir$/platform.resc`
+
+## Visual Studio Code
+
+VS-Code kann über einen Workspace konfiguriert werden, welcher über die Datei "linux.code-workspace" bzw "windows.code-workspace" geöffnet werden kann.
+
+Folgende Extensions werden benötigt:
+- jkearins.action-buttons-ext
+- webfreak.debug
+- ms-vscode.cmake-tools
+- dan-c-underwood.arm
+
+Diese sind ebenfalls als empfohlene Extensions im Workspace definiert.
+
+Nach Installation erkennt VScode die CMake Presets und bietet diese gleich an.
+Ebenfalls werden in der Statusleiste Knöpfe, um das CMake-Projekt zu *konfigurieren* und zu *bauen*,
+die QEMU-Instanz (neu) zu *starten* und gdb zu starten, hinzugefügt.
+
+Nach Änderungen am Code muss das CMake-Projekt neu gebaut und die QEMU-Instanz neu gestartet werden.

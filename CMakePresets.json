@@ -1,0 +1,31 @@
+{
+  "version": 10,
+
+  "configurePresets": [
+    {
+      "name": "arm-cortex-m4-base",
+      "hidden": true,
+      "binaryDir": "cmake-build-${presetName}",
+      "installDir": "cmake-install-${presetName}",
+      "toolchainFile": "toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_COMPILE_WARNING_AS_ERROR" : "False"
+      }
+    },
+    {
+      "inherits": ["arm-cortex-m4-base"],
+      "name": "arm-cortex-m4",
+      "displayName": "GCC Arm EABI",
+      "description": "GCC Arm EABI"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "arm-cortex-m4",
+      "displayName": "GCC Arm EABI",
+      "description": "GCC Arm EABI",
+      "configurePreset": "arm-cortex-m4"
+    }
+  ]
+}
