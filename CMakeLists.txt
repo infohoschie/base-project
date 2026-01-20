@@ -77,3 +77,4 @@ set_target_properties(
 set( RENODE_BINARY_FILE testApp.elf )
 
 configure_file( platform.resc.in platform.resc )
+configure_file( nrf52840.repl.in nrf52840.repl )

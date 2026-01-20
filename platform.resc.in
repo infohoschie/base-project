@@ -3,7 +3,7 @@ $bin ?= @${CMAKE_BINARY_DIR}/${RENODE_BINARY_FILE}
 using sysbus
 
 mach create
-machine LoadPlatformDescription @platforms/cpus/nrf52840.repl
+machine LoadPlatformDescription @${CMAKE_BINARY_DIR}/nrf52840.repl
 showAnalyzer uart0
 sysbus LoadELF $bin
 
