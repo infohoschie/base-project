@@ -52,14 +52,7 @@ void rng_init( void );
  * The function is **NOT** waiting until the next value is generated!
  *
  * @return uint8_t random byte
- */
-uint8_t rng_getRandomValue_immediately( void );
-
-/**
- * @brief This is a function stub. Implement it, if needed.
- *
- * @return uint8_t always `0`
- */
-uint8_t rng_getRandomValue_waiting( void );
+ **/
+uint8_t rng_getRandomValue( void );
 
 #endif

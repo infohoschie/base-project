@@ -42,7 +42,7 @@ SysTick_init:
 SysTickHandler:
   PUSH { LR }
   MOV R0,#'.'
-  BL Uart_writeByte
+  BL print_rng
   POP { LR }
 
   BX LR

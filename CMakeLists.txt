@@ -26,6 +26,7 @@ target_sources(
 
     drivers/nvic.h
     drivers/random.h
+    drivers/random.c
     drivers/register_access.h
     drivers/register_access.c
     drivers/uart.h
