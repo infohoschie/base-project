@@ -3,7 +3,7 @@
 
 cmake_minimum_required( VERSION 3.22 )
 
-project( skeleton-project LANGUAGES ASM C )
+project( base-project-sysprog2-2026 LANGUAGES ASM C )
 
 add_executable( testApp )
 
@@ -54,19 +54,9 @@ set_target_properties(
   testApp
   PROPERTIES LINK_DEPENDS ${CMAKE_SOURCE_DIR}/linker_script.lds )
 
-
-#####################################################################
-# Post Build Commands:
-# - extract binary
-
-
-# To copy out the binary:
-#arm-none-eabi-objcopy -O binary base.elf output.bin
-
 add_custom_command(
-  TARGET testApp
-  POST_BUILD
-  COMMAND "${OBJ_COPY}"
+  TARGET testApp  POST_BUILD
+  COMMAND ${OBJ_COPY}
   ARGS -O binary $<TARGET_FILE:testApp> $<TARGET_FILE_BASE_NAME:testApp>.bin )
 
 set_target_properties(
@@ -76,5 +66,5 @@ set_target_properties(
 # Renode Configuration
 set( RENODE_BINARY_FILE testApp.elf )
 
-configure_file( platform.resc.in platform.resc )
-configure_file( nrf52840.repl.in nrf52840.repl )
+configure_file( renode/platform.resc.in platform.resc )
+configure_file( renode/nrf52840.repl.in nrf52840.repl )
