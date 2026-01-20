@@ -18,11 +18,27 @@ uint32_t bssData[ 8];
 int main( void )
 {
   uart_init();
+
   uart_writeByte( 'H');
   uart_writeByte( 'e');
   uart_writeByte( 'l');
   uart_writeByte( 'l');
   uart_writeByte( 'o');
   uart_writeByte( '\n');
+
+  uart_writeString( "Hello World\n" );
+
+  uart_writeString( "NULL: " );
+  uart_writeNumber( 0 );
+  uart_writeByte( '\n');
+
+  uart_writeString( "The Answer to the Ultimate Question of Life, the Universe, and Everything: " );
+  uart_writeNumber( 42 );
+  uart_writeByte( '\n');
+
+  uart_writeString( "Max uint32_t: " );
+  uart_writeNumber( UINT32_MAX );
+  uart_writeByte( '\n');
+
   return 0;
 }

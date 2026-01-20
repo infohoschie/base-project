@@ -1,3 +1,18 @@
+// SPDX-License-Identifier: MPL-2.0
+/**
+ * @file
+ * @copyright
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * @author Thomas Vogt
+ *
+ * @brief Declaration of Module Random.
+ **/
+
+#ifndef DRIVERS_RANDOM_H
+#define DRIVERS_RANDOM_H
+
 #include <stdint.h>
 
 // Definitions ----------------------------------------------------------------
@@ -46,3 +61,5 @@ uint8_t rng_getRandomValue_immediately( void );
  * @return uint8_t always `0`
  */
 uint8_t rng_getRandomValue_waiting( void );
+
+#endif

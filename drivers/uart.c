@@ -1,14 +1,30 @@
+// SPDX-License-Identifier: MPL-2.0
+/**
+ * @file
+ * @copyright
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * @author Thomas Vogt
+ *
+ * @brief Definition of Module UART.
+ **/
+
 #include "uart.h"
-#include "register_access.h"
-#include "nvic.h"
+
+#include <drivers/register_access.h>
+#include <drivers/nvic.h>
+
+#include <utils/Strings.h>
 
 #include <stdint.h>
+#include <stddef.h>
 
 void Interrupt2_Handler( void );
 
 void Interrupt2_Handler( void )
 {
-  register_write(UART_BASE_ADDRESS | UART_RXDRDY, 0 );
+  register_write( UART_BASE_ADDRESS | UART_RXDRDY, 0 );
   register_write( Interrupt_ICPR, Interrupt_ID2 );
 }
 
@@ -98,4 +114,25 @@ uint8_t uart_readByteBlocking( void )
   // Feel free ;-)
 
   return 0;
+}
+
+void uart_writeString( char const * const string )
+{
+  if ( NULL == string )
+  {
+    return;
+  }
+
+  for ( char const * ch = string; *ch != '\0'; ++ch )
+  {
+    uart_writeByte( *ch );
+  }
+}
+
+void uart_writeNumber( const uint32_t number )
+{
+  char numberString[ 11 ];
+
+  Strings_numberToString( numberString, number );
+  uart_writeString( numberString );
 }

@@ -29,11 +29,19 @@ target_sources(
     drivers/register_access.h
     drivers/register_access.c
     drivers/uart.h
-    drivers/uart.c )
+    drivers/uart.c
+
+    utils/Strings.h
+    utils/Strings.c )
 
 #target_compile_options( testApp PRIVATE -save-temps )
 
 #target_link_libraries( testApp PRIVATE gcc )
+
+target_include_directories(
+  testApp
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR} )
 
 target_link_options(
   testApp
