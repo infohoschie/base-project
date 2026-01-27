@@ -5,6 +5,7 @@ using sysbus
 mach create
 machine LoadPlatformDescription @${CMAKE_BINARY_DIR}/nrf52840.repl
 showAnalyzer uart0
+showAnalyzer uart1
 sysbus LoadELF $bin
 
 machine StartGdbServer 3333

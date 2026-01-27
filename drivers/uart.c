@@ -20,6 +20,11 @@
 #include <stdint.h>
 #include <stddef.h>
 
+struct UartDevice
+{
+  uint32_t offset;
+};
+
 void Interrupt2_Handler( void );
 
 void Interrupt2_Handler( void )
@@ -28,8 +33,12 @@ void Interrupt2_Handler( void )
   register_write( Interrupt_ICPR, Interrupt_ID2 );
 }
 
-void uart_init( void )
+UartDevice * uart_init( void )
 {
+  static UartDevice uartDevice;
+
+  uartDevice.offset = UART_BASE_ADDRESS;
+
   // set Flow-Controll and/or Parity (see Table 288, page 156) --------------
   // Hardware flow control: Disabled = 0 (default)
   // Parity: Exclude parity bit = 0x0    (default)
@@ -55,68 +64,70 @@ void uart_init( void )
   // register_write((UART_BASE_ADDRESS + UART_BAUDRATE), 0x01D7E000);
 
   // Enable UART ------------------------------------------------------------
-  register_write( ( UART_BASE_ADDRESS + UART_ENABLE ), 4 );
+  register_write( ( uartDevice.offset + UART_ENABLE ), 4 );
 
 
   // Fire the START event for the Transmitter: ------------------------------
-  register_write( ( UART_BASE_ADDRESS + UART_STARTTX ), UART_TASK_START );
+  register_write( ( uartDevice.offset + UART_STARTTX ), UART_TASK_START );
 
   // Fire the START event for the Receiver: ---------------------------------
-  register_write( ( UART_BASE_ADDRESS + UART_STARTRX ), UART_TASK_START );
+  register_write( ( uartDevice.offset + UART_STARTRX ), UART_TASK_START );
 
 
   // Enable Interrupt
-  register_write((UART_BASE_ADDRESS | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
+  register_write(( uartDevice.offset | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
 
   // Enable User-Interrupt from Cortex-M0
   // ID2 ist der UART
   register_write( Interrupt_Set_Enable, Interrupt_ID2 );
+
+  return &uartDevice;
 }
 
-void uart_writeByte( const uint8_t data )
+void uart_writeByte( UartDevice * device, const uint8_t data )
 {
+  if ( NULL == device )
+  {
+    return;
+  }
+
   // write the data to the TXD register
-  register_write( ( UART_BASE_ADDRESS | UART_TXD ), data );
+  register_write( ( device->offset | UART_TXD ), data );
 
   // need to "wait" until its transmitted
-  while ( register_read( UART_BASE_ADDRESS | UART_TXDRDY ) == 0x00 )
+  while ( register_read( device->offset | UART_TXDRDY ) == 0x00 )
   {
   }
 
-  register_write( UART_BASE_ADDRESS | UART_TXDRDY, 0 );
+  register_write( device->offset | UART_TXDRDY, 0 );
 }
 
-uint8_t uart_readByte( void )
+uint8_t uart_readByte( UartDevice * device )
 {
+  if ( NULL == device )
+  {
+    return 0;
+  }
+
+
   // if not ready, return 0
-  uint32_t receiveIsReady = register_read( ( UART_BASE_ADDRESS + UART_RXDRDY ) );
+  uint32_t receiveIsReady = register_read( ( device->offset + UART_RXDRDY ) );
 
   if ( receiveIsReady )
   {
 
     // we have to CLEAR the event before reading out from RXD
-    register_write( ( UART_BASE_ADDRESS + UART_RXDRDY ), UART_EVENT_CLEAR );
+    register_write( ( device->offset + UART_RXDRDY ), UART_EVENT_CLEAR );
 
     // FIFO is ready to read something out of it
-    return register_read( ( UART_BASE_ADDRESS + UART_RXD ) );
+    return register_read( ( device->offset + UART_RXD ) );
   }
 
   // FIFO is not ready to read, so return 0 instead
   return 0;
 }
 
-uint8_t uart_readByteBlocking( void )
-{
-  // TODO: Maybe this is a good idea ?
-  // OR
-  // You can use Interrupts to receive an EVENT, if some RX data is pending
-  // but don't forget to clear it.
-  // Feel free ;-)
-
-  return 0;
-}
-
-void uart_writeString( char const * const string )
+void uart_writeString( UartDevice * device, char const * const string )
 {
   if ( NULL == string )
   {
@@ -125,14 +136,14 @@ void uart_writeString( char const * const string )
 
   for ( char const * ch = string; *ch != '\0'; ++ch )
   {
-    uart_writeByte( *ch );
+    uart_writeByte( device, *ch );
   }
 }
 
-void uart_writeNumber( const uint32_t number )
+void uart_writeNumber( UartDevice * device, const uint32_t number )
 {
   char numberString[ 11 ];
 
   Strings_numberToString( numberString, number );
-  uart_writeString( numberString );
+  uart_writeString( device, numberString );
 }

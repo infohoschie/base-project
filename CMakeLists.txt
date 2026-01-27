@@ -47,7 +47,9 @@ target_include_directories(
 target_link_options(
   testApp
   PRIVATE
+    # Create mapfile
     -Wl,-Map=$<TARGET_FILE_BASE_NAME:testApp>.map
+    # Use linker script
     -T ${CMAKE_SOURCE_DIR}/linker_script.lds )
 
 set_target_properties(
@@ -55,9 +57,10 @@ set_target_properties(
   PROPERTIES LINK_DEPENDS ${CMAKE_SOURCE_DIR}/linker_script.lds )
 
 add_custom_command(
-  TARGET testApp  POST_BUILD
-  COMMAND ${OBJ_COPY}
-  ARGS -O binary $<TARGET_FILE:testApp> $<TARGET_FILE_BASE_NAME:testApp>.bin )
+  TARGET testApp
+  POST_BUILD
+    COMMAND ${OBJ_COPY}
+    ARGS -O binary $<TARGET_FILE:testApp> $<TARGET_FILE_BASE_NAME:testApp>.bin )
 
 set_target_properties(
   testApp

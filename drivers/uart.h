@@ -60,25 +60,27 @@
 
 // C Function Definitions -----------------------------------------------------
 
+typedef struct UartDevice UartDevice;
+
 /**
  * @brief Initializing the UART with the following Settings:
  * 115200-8-N-1
  */
-void uart_init( void );
+UartDevice * uart_init( void );
 
 /**
  * @brief Writes/Sends a byte over the serial Port
  *
  * @param data byte to send (ASCII)
  **/
-void uart_writeByte( uint8_t data );
+void uart_writeByte( UartDevice * device, uint8_t data );
 
 /**
  * @brief Read/Receive a byte from the serial Port
  *
  * @return uint8_t received Byte or 0 (zero) if nothing was received
  **/
-uint8_t uart_readByte( void );
+uint8_t uart_readByte( UartDevice * device );
 
 /**
  * @brief Writes a null-terminated string to the UART interface.
@@ -93,7 +95,7 @@ uint8_t uart_readByte( void );
  * @param[in] string
  *   A pointer to the null-terminated string to be written via UART.
  **/
-void uart_writeString( char const * string );
+void uart_writeString( UartDevice * device, char const * string );
 
 /**
  * @brief Writes an unsigned 32-bit integer to the UART as a string of characters.
@@ -105,6 +107,6 @@ void uart_writeString( char const * string );
  * @param[in] number
  *   The unsigned 32-bit integer to be transmitted.
  **/
-void uart_writeNumber( uint32_t number );
+void uart_writeNumber( UartDevice * device, uint32_t number );
 
 #endif
