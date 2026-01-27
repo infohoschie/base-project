@@ -14,6 +14,7 @@
 
 #include <drivers/register_access.h>
 #include <drivers/nvic.h>
+#include <drivers/Uarte.h>
 
 #include <utils/Strings.h>
 
@@ -29,15 +30,20 @@ void Interrupt2_Handler( void );
 
 void Interrupt2_Handler( void )
 {
-  register_write( UART_BASE_ADDRESS | UART_RXDRDY, 0 );
+  register_write( UARTE0_BASE_ADDRESS | UART_RXDRDY, 0 );
   register_write( Interrupt_ICPR, Interrupt_ID2 );
 }
 
-UartDevice * uart_init( void )
-{
-  static UartDevice uartDevice;
+static UartDevice uartDevice[ 2 ];
 
-  uartDevice.offset = UART_BASE_ADDRESS;
+static size_t uartDeviceCount = 0;
+
+UartDevice * uart_init( uint32_t baseAddress )
+{
+  UartDevice * device = &uartDevice[ uartDeviceCount ];
+  ++uartDeviceCount;
+
+  device->offset = baseAddress;
 
   // set Flow-Controll and/or Parity (see Table 288, page 156) --------------
   // Hardware flow control: Disabled = 0 (default)
@@ -64,24 +70,24 @@ UartDevice * uart_init( void )
   // register_write((UART_BASE_ADDRESS + UART_BAUDRATE), 0x01D7E000);
 
   // Enable UART ------------------------------------------------------------
-  register_write( ( uartDevice.offset + UART_ENABLE ), 4 );
+  register_write( ( device->offset | UART_ENABLE ), 4 );
 
 
   // Fire the START event for the Transmitter: ------------------------------
-  register_write( ( uartDevice.offset + UART_STARTTX ), UART_TASK_START );
+  register_write( ( device->offset | UART_STARTTX ), UART_TASK_START );
 
   // Fire the START event for the Receiver: ---------------------------------
-  register_write( ( uartDevice.offset + UART_STARTRX ), UART_TASK_START );
+  register_write( ( device->offset | UART_STARTRX ), UART_TASK_START );
 
 
   // Enable Interrupt
-  register_write(( uartDevice.offset | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
+  register_write(( device->offset | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
 
   // Enable User-Interrupt from Cortex-M0
   // ID2 ist der UART
   register_write( Interrupt_Set_Enable, Interrupt_ID2 );
 
-  return &uartDevice;
+  return device;
 }
 
 void uart_writeByte( UartDevice * device, const uint8_t data )
@@ -94,7 +100,7 @@ void uart_writeByte( UartDevice * device, const uint8_t data )
   // write the data to the TXD register
   register_write( ( device->offset | UART_TXD ), data );
 
-  // need to "wait" until its transmitted
+  // need to "wait" until it's transmitted
   while ( register_read( device->offset | UART_TXDRDY ) == 0x00 )
   {
   }

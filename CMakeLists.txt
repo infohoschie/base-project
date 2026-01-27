@@ -31,6 +31,7 @@ target_sources(
     drivers/register_access.c
     drivers/uart.h
     drivers/uart.c
+    drivers/Uarte.h
 
     utils/Strings.h
     utils/Strings.c )
