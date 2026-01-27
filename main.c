@@ -16,39 +16,44 @@ uint32_t rwData[ 4] = { 3,4, 5, 6};
 
 uint32_t bssData[ 8];
 
+UartDevice * uart1;
+UartDevice * uart2;
+
 int main( void )
 {
-  uart_init();
+  uart1 = uart_init();
+  //uart2 = uart_init();
+
   rng_init();
 
-  uart_writeByte( 'H');
-  uart_writeByte( 'e');
-  uart_writeByte( 'l');
-  uart_writeByte( 'l');
-  uart_writeByte( 'o');
-  uart_writeByte( '\n');
+  uart_writeByte( uart1, 'H');
+  uart_writeByte( uart1, 'e');
+  uart_writeByte( uart1, 'l');
+  uart_writeByte( uart1, 'l');
+  uart_writeByte( uart1, 'o');
+  uart_writeByte( uart1, '\n');
 
-  uart_writeString( "Hello World\n" );
+  uart_writeString( uart1, "Hello World\n" );
 
-  uart_writeString( "NULL: " );
-  uart_writeNumber( 0 );
-  uart_writeByte( '\n');
+  uart_writeString( uart1, "NULL: " );
+  uart_writeNumber( uart1, 0 );
+  uart_writeByte( uart1, '\n');
 
-  uart_writeString( "The Answer to the Ultimate Question of Life, the Universe, and Everything: " );
-  uart_writeNumber( 42 );
-  uart_writeByte( '\n');
+  uart_writeString( uart1, "The Answer to the Ultimate Question of Life, the Universe, and Everything: " );
+  uart_writeNumber( uart1, 42 );
+  uart_writeByte( uart1, '\n');
 
-  uart_writeString( "Max uint32_t: " );
-  uart_writeNumber( UINT32_MAX );
-  uart_writeByte( '\n');
+  uart_writeString( uart1, "Max uint32_t: " );
+  uart_writeNumber( uart1, UINT32_MAX );
+  uart_writeByte( uart1, '\n');
 
   for ( uint32_t i = 0; i < 10; ++i)
   {
-    uart_writeString( "Random Value " );
-    uart_writeNumber( i );
-    uart_writeString( ": " );
-    uart_writeNumber( rng_getRandomValue() );
-    uart_writeByte( '\n');
+    uart_writeString( uart1, "Random Value " );
+    uart_writeNumber( uart1, i );
+    uart_writeString( uart1, ": " );
+    uart_writeNumber( uart1, rng_getRandomValue() );
+    uart_writeByte( uart1, '\n');
   }
 
   extern void SysTick_init( void );
@@ -59,7 +64,7 @@ int main( void )
 
 void print_rng( void )
 {
-  uart_writeString( "Random Value: " );
-  uart_writeNumber( rng_getRandomValue() );
-  uart_writeByte( '\n');
+  uart_writeString( uart1, "Random Value: " );
+  uart_writeNumber( uart1, rng_getRandomValue() );
+  uart_writeByte( uart1, '\n');
 }
