@@ -21,8 +21,8 @@ UartDevice * uart2;
 
 int main( void )
 {
-  uart1 = uart_init();
-  //uart2 = uart_init();
+  uart1 = uart_init( UARTE0_BASE_ADDRESS );
+  uart2 = uart_init( UARTE1_BASE_ADDRESS );
 
   rng_init();
 
