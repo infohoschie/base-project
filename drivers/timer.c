@@ -125,3 +125,21 @@ void timer_trigger( TimerDevice *timer )
     register_write( timer->base + TIMER_COUNT, 1 );
   }
 }
+
+void timer_set_clear_shortcut( TimerDevice * timer, uint8_t channel, bool enable )
+{
+  uint32_t shorts = register_read( timer->base + TIMER_SHORTS );
+
+  shorts = ( shorts & ~( 1 << channel ) ) | ( ( enable ? 1 : 0 ) << channel );
+
+  register_write( timer->base + TIMER_SHORTS, shorts );
+}
+
+void timer_set_stop_shortcut( TimerDevice * timer, uint8_t channel, bool enable )
+{
+  uint32_t shorts = register_read( timer->base + TIMER_SHORTS );
+
+  shorts = ( shorts & ~( 1 << ( 8+ channel) ) ) | ( ( enable ? 1 : 0 ) << (8+channel) );
+
+  register_write( timer->base + TIMER_SHORTS, shorts );
+}

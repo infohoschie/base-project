@@ -17,6 +17,7 @@
 #define TIMER_COUNT     0x008
 #define TIMER_CLEAR     0x00C
 #define TIMER_CAPTURE(n) (0x040 + (n) * 4) // Capture Regs 0...5, times 4 cause Register Width is 4
+#define TIMER_SHORTS     0x200
 #define TIMER_MODE      0x504
 #define TIMER_BITMODE   0x508
 #define TIMER_PRESCALER 0x510
@@ -66,5 +67,9 @@ uint32_t timer_get_frequency(TimerDevice *timer);
 bool timer_get_event( TimerDevice *timer, uint8_t cc_channel, bool reset );
 
 void timer_trigger( TimerDevice *timer );
+
+void timer_set_clear_shortcut( TimerDevice * timer, uint8_t channel, bool enable );
+
+void timer_set_stop_shortcut( TimerDevice * timer, uint8_t channel, bool enable );
 
 #endif //TIMER_H
