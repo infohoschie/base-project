@@ -5,7 +5,9 @@ cmake_minimum_required( VERSION 3.22 )
 
 project( base-project-sysprog2-2026 LANGUAGES ASM C )
 
-add_executable( testApp )
+add_executable( testApp
+        drivers/timer.h
+        drivers/timer.c)
 
 target_sources(
   testApp

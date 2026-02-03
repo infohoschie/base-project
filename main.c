@@ -64,7 +64,7 @@ int main( void )
 
 void print_rng( void )
 {
-  uart_writeString( uart1, "Random Value: " );
-  uart_writeNumber( uart1, rng_getRandomValue() );
-  uart_writeByte( uart1, '\n');
+  uart_writeString( uart2, "Random Value: " );
+  uart_writeNumber( uart2, rng_getRandomValue() );
+  uart_writeByte( uart2, '\n');
 }
