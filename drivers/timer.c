@@ -95,7 +95,7 @@ void timer_set_compare(TimerDevice *timer, uint8_t cc_channel ,uint32_t compare_
 uint32_t timer_get_frequency(TimerDevice *timer)
 {
   if (timer == NULL || timer->prescaler == 0){
-    return NULL;
+    return 0;
   }
   return TIMER_CLOCK_HZ / timer-> prescaler;
 

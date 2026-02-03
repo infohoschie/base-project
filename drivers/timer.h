@@ -5,6 +5,7 @@
 #ifndef DRIVER_TIMER_H
 #define DRIVER_TIMER_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define TIMER0_BASE_ADRESS 0x40008000
@@ -48,7 +49,6 @@ TimerDevice* timer_init(uint8_t timer_id, // Timer 1...5
                         timer_bitmode bitmode, //Resolution in Bits
                         uint8_t prescaler); // Prescale Factor for adjusting the frequency
 
-
 void timer_deinit(TimerDevice *timer);
 void timer_start(TimerDevice *timer);
 void timer_stop(TimerDevice *timer);
@@ -58,10 +58,8 @@ void timer_set_compare(TimerDevice *timer, uint8_t cc_channel, uint32_t value);
 
 uint32_t timer_get_frequency(TimerDevice *timer);
 
+bool timer_get_event( TimerDevice *timer, uint8_t cc_channel, bool reset );
 
-
-
-
-
+void timer_trigger( TimerDevice *timer );
 
 #endif //TIMER_H
