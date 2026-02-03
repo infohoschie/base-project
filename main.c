@@ -8,6 +8,8 @@
 #include <drivers/uart.h>
 #include <drivers/random.h>
 
+#include <tests/timer_test.h>
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -23,6 +25,8 @@ int main( void )
 {
   uart1 = uart_init( UARTE0_BASE_ADDRESS );
   uart2 = uart_init( UARTE1_BASE_ADDRESS );
+
+  timer_test( uart1);
 
   rng_init();
 

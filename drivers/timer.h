@@ -14,11 +14,14 @@
 // Adress offset from base
 #define TIMER_START     0x000
 #define TIMER_STOP      0x004
+#define TIMER_COUNT     0x008
 #define TIMER_CLEAR     0x00C
-#define TIMER_BITMODE   0x508
+#define TIMER_CAPTURE(n) (0x040 + (n) * 4) // Capture Regs 0...5, times 4 cause Register Width is 4
 #define TIMER_MODE      0x504
+#define TIMER_BITMODE   0x508
 #define TIMER_PRESCALER 0x510
 #define TIMER_CC(n)     (0x540 + (n) * 4) // Capture Regs 0...5, times 4 cause Register Width is 4
+#define TIMER_EVENTS_COMPARE(n) (0x140 + (n) * 4)
 
 #define TIMER_CLOCK_HZ 16000000UL //  Unsigned Long
 
@@ -35,7 +38,7 @@ typedef enum{
 } timer_bitmode;
 
 typedef struct{
-  volatile uint32_t *base;
+  uint32_t base;
   uint8_t timer_id;
   timer_mode mode;
   timer_bitmode bitmode;
@@ -53,7 +56,9 @@ void timer_deinit(TimerDevice *timer);
 void timer_start(TimerDevice *timer);
 void timer_stop(TimerDevice *timer);
 void timer_clear(TimerDevice *timer);
-uint32_t timer_get_counter(TimerDevice *timer);
+void timer_capture(TimerDevice *timer, uint8_t cc_channel);
+
+uint32_t timer_get_counter(TimerDevice *timer, uint8_t cc_channel);
 void timer_set_compare(TimerDevice *timer, uint8_t cc_channel, uint32_t value);
 
 uint32_t timer_get_frequency(TimerDevice *timer);

@@ -5,9 +5,7 @@ cmake_minimum_required( VERSION 3.22 )
 
 project( base-project-sysprog2-2026 LANGUAGES ASM C )
 
-add_executable( testApp
-        drivers/timer.h
-        drivers/timer.c)
+add_executable( testApp)
 
 target_sources(
   testApp
@@ -31,12 +29,17 @@ target_sources(
     drivers/random.c
     drivers/register_access.h
     drivers/register_access.c
+    drivers/timer.h
+    drivers/timer.c
     drivers/uart.h
     drivers/uart.c
     drivers/Uarte.h
 
     utils/Strings.h
-    utils/Strings.c )
+    utils/Strings.c
+
+    tests/timer_test.h
+    tests/timer_test.c )
 
 #target_compile_options( testApp PRIVATE -save-temps )
 
