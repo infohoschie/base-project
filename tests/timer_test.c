@@ -33,6 +33,7 @@ void timer_test( UartDevice * uart )
       timer_capture( timer0, 1);
     }
 
+
     timer_get_event( timer0, 0, true );
     timer_clear( timer0 );
     timer_trigger( timer1 );

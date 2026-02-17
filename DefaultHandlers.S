@@ -66,5 +66,12 @@ Set_Default_Handler  Interrupt6Handler
 Set_Default_Handler  Interrupt7Handler
 Set_Default_Handler  Interrupt8Handler
 Set_Default_Handler  Interrupt9Handler
+Set_Default_Handler  Interrupt10Handler
+Set_Default_Handler  Interrupt11Handler
+Set_Default_Handler  Interrupt12Handler
+Set_Default_Handler  Interrupt13Handler
+Set_Default_Handler  Interrupt14Handler
+Set_Default_Handler  Interrupt15Handler
+Set_Default_Handler  Interrupt16Handler
 
 .end

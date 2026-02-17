@@ -36,12 +36,16 @@ target_sources(
     drivers/Uarte.h
     drivers/Wdt.h
     drivers/Wdt.c
+    drivers/WdtRegisters.h
 
     utils/Strings.h
     utils/Strings.c
 
     tests/timer_test.h
-    tests/timer_test.c )
+    tests/timer_test.c
+
+    tests/wdt_test.h
+    tests/wdt_test.c )
 
 #target_compile_options( testApp PRIVATE -save-temps )
 

@@ -39,8 +39,15 @@ __Vectors:
 .long Interrupt7Handler /*   7 Interrupt 7 */
 .long Interrupt8Handler /*   8 Interrupt 8 */
 .long Interrupt9Handler /*   9 Interrupt 9 */
+.long Interrupt10Handler /* 10 Interrupt 10 */
+.long Interrupt11Handler /* 11 Interrupt 11 */
+.long Interrupt12Handler /* 12 Interrupt 12 */
+.long Interrupt13Handler /* 13 Interrupt 13 */
+.long Interrupt14Handler /* 14 Interrupt 14 */
+.long Interrupt15Handler /* 15 Interrupt 15 */
+.long Interrupt16Handler /* 16 Interrupt 16 */
 
-.space   (214 * 4)                          /* Interrupts 10 .. 224 are left out */
+.space   (207 * 4)                          /* Interrupts 10 .. 224 are left out */
 .globl __Vectors_End
 __Vectors_End:
 

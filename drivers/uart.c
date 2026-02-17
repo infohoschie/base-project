@@ -81,7 +81,7 @@ UartDevice * uart_init( uint32_t baseAddress )
 
 
   // Enable Interrupt
-  register_write(( device->offset | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
+  //register_write(( device->offset | UART_INTENSET), UART_INT_RXDRDY ); // Interrupt on Compare[0]
 
   // Enable User-Interrupt from Cortex-M0
   // ID2 ist der UART
@@ -114,7 +114,6 @@ uint8_t uart_readByte( UartDevice * device )
   {
     return 0;
   }
-
 
   // if not ready, return 0
   uint32_t receiveIsReady = register_read( ( device->offset + UART_RXDRDY ) );

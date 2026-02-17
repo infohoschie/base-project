@@ -46,6 +46,7 @@
 #define Interrupt_ID8             (1 <<  8)  // Bit for User Interrupt ID: 8
 #define Interrupt_ID9             (1 <<  9)  // Bit for User Interrupt ID: 9
 #define Interrupt_ID10            (1 << 10)  // Bit for User Interrupt ID:10
+#define Interrupt_ID16            (1 << 16)  // Bit for User Interrupt ID:16
 
 
 // From System Control Block:
