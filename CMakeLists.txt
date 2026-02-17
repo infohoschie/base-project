@@ -34,6 +34,8 @@ target_sources(
     drivers/uart.h
     drivers/uart.c
     drivers/Uarte.h
+    drivers/Wdt.h
+    drivers/Wdt.c
 
     utils/Strings.h
     utils/Strings.c
