@@ -39,6 +39,8 @@ target_sources(
     drivers/WdtRegisters.h
     drivers/EventGeneratorUnit.h
     drivers/EventGeneratorUnit.c
+    drivers/mpu.h
+    drivers/mpu.c
 
     utils/Strings.h
     utils/Strings.c
@@ -50,7 +52,10 @@ target_sources(
     tests/wdt_test.c
 
     tests/egu_test.h
-    tests/egu_test.c )
+    tests/egu_test.c
+
+    tests/mpu_test.h
+    tests/mpu_test.c )
 
 #target_compile_options( testApp PRIVATE -save-temps )
 

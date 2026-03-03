@@ -11,6 +11,7 @@
 #include <tests/timer_test.h>
 #include <tests/wdt_test.h>
 #include <tests/egu_test.h>
+#include <tests/mpu_test.h>
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -64,8 +65,9 @@ int main( void )
     uart_writeByte( uart1, '\n');
   }
 
+  mpu_test( uart1 );
   extern void SysTick_init( void );
-  SysTick_init();
+  //SysTick_init();
 
   return 0;
 }
