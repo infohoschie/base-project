@@ -37,6 +37,8 @@ target_sources(
     drivers/Wdt.h
     drivers/Wdt.c
     drivers/WdtRegisters.h
+    drivers/EventGeneratorUnit.h
+    drivers/EventGeneratorUnit.c
 
     utils/Strings.h
     utils/Strings.c
