@@ -28,6 +28,22 @@ typedef enum EGUnit
 
 typedef void (*EGHandler)( void );
 
+#define EGU0_OFFSET 0x40014000U
+#define EGU1_OFFSET 0x40015000U
+#define EGU2_OFFSET 0x40016000U
+#define EGU3_OFFSET 0x40017000U
+#define EGU4_OFFSET 0x40018000U
+#define EGU5_OFFSET 0x40019000U
+
+#define EGU_OFFSET_N( egu ) ( 0x40014000U  + ( egu  * 0x1000U ) )
+
+#define EGU_TASKS_TRIGGER_N( event )    ( 0x000U + ( event  * 4U ) )
+#define EGU_EVENTS_TRIGGERED_N( event ) ( 0x100U + ( event  * 4U ) )
+
+#define EGU_INTEN     0x300U
+#define EGU_INTENSET  0x304U
+#define EGU_INTENCLR  0x308U
+
 void EGUnit_init( EGUnit unit );
 
 void EGUnit_registerHandler( EGUnit unit, uint8_t event, EGHandler handler );

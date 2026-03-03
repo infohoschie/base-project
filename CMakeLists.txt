@@ -47,7 +47,10 @@ target_sources(
     tests/timer_test.c
 
     tests/wdt_test.h
-    tests/wdt_test.c )
+    tests/wdt_test.c
+
+    tests/egu_test.h
+    tests/egu_test.c )
 
 #target_compile_options( testApp PRIVATE -save-temps )
 

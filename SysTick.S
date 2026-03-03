@@ -41,8 +41,7 @@ SysTick_init:
 
 SysTickHandler:
   PUSH { LR }
-  MOV R0,#'.'
-  BL print_rng
+  BL egu_test_trigger
   POP { LR }
 
   BX LR

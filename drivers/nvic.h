@@ -49,10 +49,28 @@
 #define Interrupt_ID10            (1 << 10)  // Bit for User Interrupt ID:10
 #define Interrupt_ID16            (1 << 16)  // Bit for User Interrupt ID:16
 
-
 // From System Control Block:
 // Useful for showing States and Pending Status
 
-#define ICSR                      0xE000ED04  // Interrupt Control and State Register
+//! Interrupt Control and State Register
+  #define ICSR    0xE000ED04
+// #define ICTR 0xE000E004
+// #define STIR 0xE000EF00
+
+//! Interrupt Set-Enable Registers
+#define NVIC_ISER_N( set )   ( 0xE000E100 + ( ( set ) * 4U ) )
+//! Interrupt Clear-Enable Registers
+#define NVIC_ICER_N( set )   ( 0xE000E180 + ( ( set ) * 4U ) )
+//! Interrupt Set-Pending Registers
+#define NVIC_ISPR_N( set )   ( 0xE000E200 + ( ( set ) * 4U ) )
+//! Interrupt Clear-Pending Registers
+#define NVIC_ICPR_N( set )   ( 0xE000E280 + ( ( set ) * 4U ) )
+//! Interrupt Active Bit Registers
+#define NVIC_IABR_N( set )   ( 0xE000E300 + ( ( set ) * 4U ) )
+//! Interrupt Priority Registers
+#define NVIC_IPR_N( set )    ( 0xE000E400 + ( ( set ) * 4U ) )
+
+#define NVIC_INT_SET( interrupt ) ( ( interrupt ) / 32 )
+#define NVIC_INT_BIT( interrupt ) ( ( interrupt ) % 32 )
 
 #endif

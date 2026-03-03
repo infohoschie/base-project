@@ -38,7 +38,7 @@ static UartDevice uartDevice[ 2 ];
 
 static size_t uartDeviceCount = 0;
 
-UartDevice * uart_init( uint32_t baseAddress )
+UartDevice * uart_init( const uint32_t baseAddress )
 {
   UartDevice * device = &uartDevice[ uartDeviceCount ];
   ++uartDeviceCount;
